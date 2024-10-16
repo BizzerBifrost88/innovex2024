@@ -1,0 +1,448 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Setting</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+    <style>
+        body{
+            margin: 0;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            background: linear-gradient(to top, #83CE7D, rgb(251, 251, 251));
+            align-items: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: x-large;
+            animation: popUp 1s ease-out;
+        }
+        @keyframes popUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 30%; 
+        }
+        .websitelogo {
+            transition: transform 0.2s ease-in-out; 
+            width: 100px;
+            height: 80px;
+            margin-top: 23px;
+        }
+
+        .websitelogo:hover {
+            transform: scale(1.1); 
+        }        
+        .header h1{
+            margin-left: 3%;
+        }
+        .menuBox{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out;
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+        .menuBox a{
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s ease-in-out;
+            
+        }
+        .menuBox a:hover{
+            cursor: pointer;
+            transform: scale(1.1); 
+            transition: transform 0.2s ease-in-out;
+            
+        }
+        .menu-list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .menu-box{
+            border: 1px solid #ccc;
+            background: linear-gradient(to top left, #83CE7D, white);
+            padding: 10px;
+            margin: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 220px;
+            box-shadow: 10px 7px 10px 3px rgba(0, 0, 0, 0.723);
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .menu-box img {
+            width: 100%;
+            height: auto;
+        }
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #00510b; 
+            color: white;
+            transition: left 0.3s;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .slide-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0px 1px 0px 0px rgb(188, 188, 188);
+            padding-top: 7px;
+            padding-bottom: 20px;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .slide-menu a:hover {
+            background-color: #7c7c7c; 
+        }
+        #menuButton{
+            background-color: #00510b; /* Background color of the menu button */
+            border: none;
+            margin-right: 35%;
+            cursor: pointer;
+        }
+
+        #menuButton img{
+            width: 27px;
+            margin-left: 20px;
+        }
+
+        .slide-menu.open {
+            left: 0px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        }
+        .button{
+            position: relative;
+            background-color: #ffffff;
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 10px 30px;
+            text-decoration: white;
+            font-size: 20px;
+            display: inline-block;
+            margin-top: 4%;
+            margin-bottom: 4%;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 10px 10px 10px 5px rgb(74, 74, 74);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-250%) skewX(-30deg);
+            transition: transform 0.7s ease-in-out;
+            }
+
+            .button:hover::before {
+            transform: translateX(200%) skewX(-30deg);
+            }
+
+            .button:hover{
+            background: rgb(212, 212, 212); /* Gradient background on hover */
+            transform: scale(1.1);
+        }        
+        .header h1 {
+            text-align: center;
+            text-shadow: 
+                -1px -1px 0 #ffffff, 
+                 1px -1px 0 #ffffff,
+                -1px  1px 0 #ffffff,
+                 1px  1px 0 #ffffff,
+                 3px 4px 3px  rgb(39, 39, 39); 
+            
+            margin-bottom: 60px;
+        }
+        .messages {
+            color: red;
+            font-size: large;
+            text-align: center;
+        }       
+        input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+        }  
+        .user-list table,.user-list th{
+            border: 1px solid black;
+            margin-bottom: 1%;
+        }      
+        .form{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            margin: 20px;
+        }
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .header h1 {
+                margin-left: 0;
+                font-size: 24px;
+            }
+
+            .form {
+                flex-direction: column;
+            }
+
+            .cafe-list table, .cafe-list th, .cafe-list td {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 16px;
+                padding: 8px 20px;
+            }
+            .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 37%; 
+        }
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                flex-direction: row;
+            }
+
+            .logo {
+                margin-left: 38%; 
+            }
+
+            .header h1 {
+                margin-left: 8%;
+                font-size: 32px;
+            }
+
+            .form {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .table-form, .delete-cafe {
+                max-width: 500px;
+            }
+
+            .cafe-list table, .cafe-list th, .cafe-list td {
+                font-size: 16px;
+            }
+
+            .button {
+                font-size: 20px;
+                padding: 10px 30px;
+            }
+            .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 37%; 
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button id="menuButton"><img src="{% static 'menu.png' %}"></button>
+            <div id="slideMenu" class="slide-menu"> <!-- Slide menu for navigation -->
+                <a href="{% url 'adminmenu' %}">Home</a>
+                <a href="{% url 'cafestaff' %}">Cafe & Staff</a>
+                <a href="{% url 'usersetting' %}">User Setting</a>
+                <a href="{% url 'logout' %}">Logout</a>
+                <a href="#" id="closeMenu">Close</a>
+            </div>
+            <h1>User Setting</h1>
+            <div class="logo">
+                <a href="{% url 'adminmenu' %}"><img class="websitelogo" src="{% static 'logo.png' %}" alt="maKan"></a>
+            </div>
+        </div>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div> 
+        <div class="form">       
+            <div class="delete-cafe">
+                <center>
+                    <h3>Delete User</h3>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <table>
+                            <tr>
+                                <td><input type="text" name="userID" placeholder="UserID" ></td>
+                            </tr>
+                        </table>
+                        <button class="button" type="submit">Delete User</button>
+                    </form>
+                </center>
+            </div>
+        </div>        
+        <div class="user-list">
+            <table>    
+                <h2>List of users</h2>  
+                <tr>
+                    <th>UserID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Password</th>
+                </tr>
+                {% for i in myuser %}
+                <tr>
+                    <th>{{i.userID}}</th>
+                    <th>{{i.name}}</th>
+                    <th>{{i.email}}</th>
+                    <th>{{i.phone}}</th>
+                    <th>{{i.password}}</th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>        
+        <div class="footer">
+            <center><h1>maKan &copy; 2024</h1></center><br>
+            <p>Developers:<br></p>
+            <table>
+                <tr>
+                    <td>ASMAWI AIMAN MOHD SANI</td>
+                    <td>ICS23-08-017</td>
+                </tr>
+                <tr>
+                    <td>SITI NOR AIN NATASYA BINTI MOHAMED</td>
+                    <td>ICS23-08-053</td>
+                </tr>
+                <tr>
+                    <td>NUR SOFIA BALQIS BINTI ROSPI</td>
+                    <td>ICS23-08-068</td>
+                </tr>
+                <tr>
+                    <td>WARDAH TIHANI BINTI ZULKARNAIN</td>
+                    <td>ICS23-08-059</td>
+                </tr>
+                <tr>
+                    <td>SITI KHADIJAH BINTI MOHAMMAD</td>
+                    <td>ICS23-08-051</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Slide menu functionality
+            const menuButton = document.getElementById('menuButton');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeMenu = document.getElementById('closeMenu');
+
+            if (menuButton && slideMenu && closeMenu) {
+                menuButton.addEventListener('click', function() {
+                    slideMenu.classList.add('open');
+                });
+
+                closeMenu.addEventListener('click', function() {
+                    slideMenu.classList.remove('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

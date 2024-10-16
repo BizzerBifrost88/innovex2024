@@ -1,0 +1,549 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Detail</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+    <style>
+        body{
+            margin: 0;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            background: linear-gradient(to top, #83CE7D, rgb(251, 251, 251));
+            align-items: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: x-large;
+            animation: popUp 1s ease-out;
+        }
+        @keyframes popUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 37%; 
+        }
+        .websitelogo {
+            transition: transform 0.2s ease-in-out; 
+            width: 100px;
+            height: 80px;
+            margin-top: 23px;
+        }
+
+        .websitelogo:hover {
+            transform: scale(1.1); 
+        }        
+        .header h1{
+            margin-left: 7%;
+        }
+        
+        .menuBox{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out;
+            margin-top: 80px;
+            margin-bottom: 80px;
+        }
+        .menuBox a{
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s ease-in-out;
+            
+        }
+        .menuBox a:hover{
+            cursor: pointer;
+            transform: scale(1.1); 
+            transition: transform 0.2s ease-in-out;
+            
+        }
+        .menu-list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .menu-box{
+            border: 1px solid #ccc;
+            background: linear-gradient(to top left, #83CE7D, white);
+            padding: 10px;
+            margin: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 220px;
+            box-shadow: 10px 7px 10px 3px rgba(0, 0, 0, 0.723);
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .menu-box img {
+            width: 100%;
+            height: auto;
+        }
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #00510b; 
+            color: white;
+            transition: left 0.3s;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .slide-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0px 1px 0px 0px rgb(188, 188, 188);
+            padding-top: 7px;
+            padding-bottom: 20px;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .slide-menu a:hover {
+            background-color: #7c7c7c; 
+        }
+        #menuButton{
+            background-color: #00510b; /* Background color of the menu button */
+            border: none;
+            margin-right: 35%;
+            cursor: pointer;
+        }
+
+        #menuButton img{
+            width: 27px;
+            margin-left: 20px;
+        }
+
+        .slide-menu.open {
+            left: 0px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        }
+        .header h1 {
+            text-align: center;
+            text-shadow: 
+                -1px -1px 0 #ffffff, 
+                 1px -1px 0 #ffffff,
+                -1px  1px 0 #ffffff,
+                 1px  1px 0 #ffffff,
+                 3px 4px 3px  rgb(39, 39, 39); 
+            
+            margin-bottom: 60px;
+        }        
+        .menuBox table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .menuBox table th, .menuBox table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .menuBox table th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+    }
+
+        .table-title {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Button styles for actions */
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .header h1 {
+                margin-left: 0;
+                font-size: 24px;
+            }
+
+            .form {
+                flex-direction: column;
+            }
+
+            .cafe-list table, .cafe-list th, .cafe-list td {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 16px;
+                padding: 8px 20px;
+            }
+            .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 37%; 
+        }
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                flex-direction: row;
+            }
+
+            .logo {
+                margin-left: 38%; 
+            }
+
+            .header h1 {
+                margin-left: 8%;
+                font-size: 32px;
+            }
+
+            .form {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .table-form, .delete-cafe {
+                max-width: 500px;
+            }
+
+            .cafe-list table, .cafe-list th, .cafe-list td {
+                font-size: 16px;
+            }
+
+            .button {
+                font-size: 20px;
+                padding: 10px 30px;
+            }
+            .container{
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            background-color: #00510b; 
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            justify-content: space-between; /* Ensure space between logo and heading */
+            width: 100%;
+        }
+        .footer{
+            background-color: #00510b;
+            color: aliceblue;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            font-size: medium;
+            width: 100%;
+            height: auto;
+            margin-top: 5%;
+        }
+        .logo {
+            background-color: #00510b;
+            margin-left: 37%; 
+        }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button id="menuButton"><img src="{% static 'menu.png' %}"></button>
+            <div id="slideMenu" class="slide-menu"> <!-- Slide menu for navigation -->
+                <a href="{% url 'staffmenu' %}">Home</a>
+                <a href="{% url 'orderdetail' %}">Order</a>
+                <a href="{% url 'menudetail' %}">Menu</a>
+                <a href="{% url 'logout' %}">Logout</a>
+                <a href="#" id="closeMenu">Close</a>
+            </div>
+            <h1>Order</h1>
+            <div class="logo">
+                <a href="{% url 'staffmenu' %}"><img class="websitelogo" src="{% static 'logo.png' %}" alt="maKan"></a>
+            </div>
+        </div>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div> 
+        <div class="menu-list">
+            <div class="menuBox">
+                <div class="table-title">List of Orders Received</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderID</th>
+                            <th>Name</th>
+                            <th>Menu</th>
+                            <th>Price (RM)</th>
+                            <th>Quantity</th>
+                            <th>Total Price (RM)</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in received_orders %}
+                        <tr>
+                            <td>{{ order.orderID }}</td>
+                            <td>{{ order.userID.name }}</td>
+                            <td>{{ order.menuID.name }}</td>
+                            <td>{{ order.menuID.price }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.total_price }}</td>
+                            <td>
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="order_id" value="{{ order.orderID }}">
+                                    <select name="status">
+                                        <option value="0" {% if order.status == 0 %}selected{% endif %}>None</option>
+                                        <option value="1">Preparing</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                {% if order.pay == 0 %}
+                                    Not Pay
+                                {% elif order.pay == 1 %}
+                                    Paid                                  
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        
+                <!-- List of Orders Preparing -->
+                <div class="table-title">List of Orders Preparing</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderID</th>
+                            <th>Name</th>
+                            <th>Menu</th>
+                            <th>Price (RM)</th>
+                            <th>Quantity</th>
+                            <th>Total Price (RM)</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in preparing_orders %}
+                        <tr>
+                            <td>{{ order.orderID }}</td>
+                            <td>{{ order.userID.name }}</td>
+                            <td>{{ order.menuID.name }}</td>
+                            <td>{{ order.menuID.price }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.total_price }}</td>
+                            <td>
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="order_id" value="{{ order.orderID }}">
+                                    <select name="status">
+                                        <option value="1" {% if order.status == 1 %}selected{% endif %}>None</option>
+                                        <option value="2">Ready to Pick Up</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                {% if order.pay == 0 %}
+                                    Not Pay
+                                {% elif order.pay == 1 %}
+                                    Paid                                  
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        
+                <!-- List of Orders Ready to Pick Up -->
+                <div class="table-title">List of Orders Ready to Pick Up</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderID</th>
+                            <th>Name</th>
+                            <th>Menu</th>
+                            <th>Price (RM)</th>
+                            <th>Quantity</th>
+                            <th>Total Price (RM)</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in ready_orders %}
+                        
+                        <tr>
+                            <td>{{ order.orderID }}</td>
+                            <td>{{ order.userID.name }}</td>
+                            <td>{{ order.menuID.name }}</td>
+                            <td>{{ order.menuID.price }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.total_price }}</td>
+                            <td>
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="order_id" value="{{ order.orderID }}">
+                                    <select name="status">
+                                        <option value="2" {% if order.status == 2 %}selected{% endif %}>None</option>
+                                        <option value="3">Picked Up</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                {% if order.pay == 0 %}
+                                    Not Pay
+                                {% elif order.pay == 1 %}
+                                    Paid                                  
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="footer">
+            <center><h1>maKan &copy; 2024</h1></center><br>
+            <p>Developers:<br></p>
+            <table>
+                <tr>
+                    <td>ASMAWI AIMAN MOHD SANI</td>
+                    <td>ICS23-08-017</td>
+                </tr>
+                <tr>
+                    <td>SITI NOR AIN NATASYA BINTI MOHAMED</td>
+                    <td>ICS23-08-053</td>
+                </tr>
+                <tr>
+                    <td>NUR SOFIA BALQIS BINTI ROSPI</td>
+                    <td>ICS23-08-068</td>
+                </tr>
+                <tr>
+                    <td>WARDAH TIHANI BINTI ZULKARNAIN</td>
+                    <td>ICS23-08-059</td>
+                </tr>
+                <tr>
+                    <td>SITI KHADIJAH BINTI MOHAMMAD</td>
+                    <td>ICS23-08-051</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Slide menu functionality
+            const menuButton = document.getElementById('menuButton');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeMenu = document.getElementById('closeMenu');
+
+            if (menuButton && slideMenu && closeMenu) {
+                menuButton.addEventListener('click', function() {
+                    slideMenu.classList.add('open');
+                });
+
+                closeMenu.addEventListener('click', function() {
+                    slideMenu.classList.remove('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

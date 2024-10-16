@@ -1,0 +1,105 @@
+{% load static %}
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>maKan</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+    <style>
+         body {
+            background: linear-gradient(to top, #83CE7D, rgb(251, 251, 251));
+            align-items: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: x-large;
+            animation: slideUpBody 1s ease-out;
+        }
+
+        @keyframes slideUpBody {
+            from {
+                transform: translateY(5px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .button{
+            position: relative;
+            background-color: #ffffff;
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 15px 50px;
+            text-decoration: white;
+            font-size: 25px;
+            display: inline-block;
+            margin: 8px;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 10px 10px 10px 5px rgb(74, 74, 74);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-250%) skewX(-30deg);
+            transition: transform 0.7s ease-in-out;
+            }
+
+            .button:hover::before {
+            transform: translateX(200%) skewX(-30deg);
+            }
+
+            .button:hover{
+            background: rgb(212, 212, 212); 
+            transform: scale(1.1);
+        }
+        .maKan {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 90px;
+            color: black;
+            margin-bottom: 10px;
+            animation: slideUp 1s ease-out;
+            text-shadow: 
+                -1px -1px 0 #ffffff, 
+                 1px -1px 0 #ffffff,
+                -1px  1px 0 #ffffff,
+                 1px  1px 0 #ffffff,
+                 3px 4px 3px  rgb(39, 39, 39); 
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        center{
+            margin-top: 3%;
+            }
+    </style>
+    </head>
+    <body>
+    <center>
+        <img src="{% static 'logo.png' %}" alt="maKan">
+        <h1 class="maKan">maKan</h1>
+        <h3>Book Your Food Online  On maKan Now!</h3>
+        <br>
+        <br>
+        
+        <a href="{% url 'login' %}" class="button">LOG IN</a><br>
+        <a href="{% url 'signup' %}" class="button">SIGN UP</a>
+    </center>
+    </body>
+</html>
